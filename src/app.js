@@ -11,8 +11,9 @@ import { renderCV } from './templates/index.js';
 import { exportPdf, printPdf, getPageCount } from './export/pdf.js';
 import { exportImage } from './export/image.js';
 import { exportJson, importJson } from './export/json-io.js';
-import { validate, getTips, getRandomTip } from './writing-tips.js';
+import { validate, getTips, getRandomTip, getFieldTip, getFieldTips, getActionVerbs, getAchievementFormulas, getWeakWords, checkWeakWords } from './writing-tips.js';
 import { initDragSort, moveSection } from './drag-sort.js';
+import { WIZARD_STEPS, getStepIndex, getCompletionStatus, getCompletionPercent } from './guide-wizard.js';
 
 /**
  * Register the cvApp Alpine component.
@@ -41,6 +42,12 @@ export function registerApp() {
             validationIssues: [],
             sectionManagerOpen: false,
             renderedCV: '',
+
+            // --- Guide Wizard ---
+            wizardOpen: false,
+            wizardStep: 0,
+            wizardSteps: WIZARD_STEPS,
+            wizardShowExample: false,
 
             // --- Data ---
             ...empty,
@@ -256,6 +263,89 @@ export function registerApp() {
             hideTip() {
                 this.showTips = false;
                 this.tipTargetSection = '';
+            },
+
+            // --- Advanced Field Tips ---
+            fieldTip(sectionId, fieldKey) {
+                return getFieldTip(sectionId, fieldKey);
+            },
+            actionVerbs: getActionVerbs(),
+            achievementFormulas: getAchievementFormulas(),
+            weakWords: getWeakWords(),
+            showFieldHelper: false,
+            fieldHelperSection: '',
+            fieldHelperField: '',
+            fieldHelperData: null,
+            openFieldHelper(sectionId, fieldKey) {
+                const tip = getFieldTip(sectionId, fieldKey);
+                if (!tip) return;
+                this.fieldHelperSection = sectionId;
+                this.fieldHelperField = fieldKey;
+                this.fieldHelperData = tip;
+                this.showFieldHelper = true;
+            },
+            closeFieldHelper() {
+                this.showFieldHelper = false;
+                this.fieldHelperData = null;
+            },
+            showVerbHelper: false,
+            toggleVerbHelper() {
+                this.showVerbHelper = !this.showVerbHelper;
+            },
+
+            // --- Guide Wizard Methods ---
+            openWizard() {
+                this.wizardOpen = true;
+                this.wizardStep = 0;
+                this.wizardShowExample = false;
+                track('wizard_opened');
+            },
+            closeWizard() {
+                this.wizardOpen = false;
+                this.wizardShowExample = false;
+                track('wizard_closed', { step: this.wizardSteps[this.wizardStep]?.id });
+            },
+            wizardNext() {
+                if (this.wizardStep < this.wizardSteps.length - 1) {
+                    this.wizardStep++;
+                    this.wizardShowExample = false;
+                }
+            },
+            wizardPrev() {
+                if (this.wizardStep > 0) {
+                    this.wizardStep--;
+                    this.wizardShowExample = false;
+                }
+            },
+            wizardGoTo(index) {
+                if (index >= 0 && index < this.wizardSteps.length) {
+                    this.wizardStep = index;
+                    this.wizardShowExample = false;
+                }
+            },
+            get wizardCurrentStep() {
+                return this.wizardSteps[this.wizardStep] || this.wizardSteps[0];
+            },
+            get wizardProgress() {
+                return Math.round(((this.wizardStep) / (this.wizardSteps.length - 1)) * 100);
+            },
+            get wizardCompletionStatus() {
+                return getCompletionStatus(this);
+            },
+            get wizardCompletionPercent() {
+                return getCompletionPercent(this.wizardCompletionStatus);
+            },
+            wizardToggleExample() {
+                this.wizardShowExample = !this.wizardShowExample;
+            },
+            wizardFinish() {
+                this.wizardOpen = false;
+                this.wizardShowExample = false;
+                track('wizard_completed', { completion: this.wizardCompletionPercent });
+                this.$nextTick(() => { this.updateRenderedCV(); this.updatePageInfo(); });
+            },
+            wizardAddItem(sectionId) {
+                this.addItem(sectionId);
             },
 
             // --- Clear ---

@@ -174,6 +174,10 @@
                     </template>
                 </div>
             </div>
+            <button @click="openWizard()" class="wizard-trigger-btn">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                מדריך כתיבה
+            </button>
             <button @click="clearData()" class="bg-slate-800 hover:bg-red-900/40 text-red-400 font-medium py-2 px-4 rounded-lg text-sm border border-slate-700 hover:border-red-800/70 transition">איפוס</button>
         </div>
     </header>
@@ -268,7 +272,13 @@
                             </div>
                         </div>
                     </div>
-                    <textarea x-model="personal.about" rows="4" placeholder="פסקה קצרה וממוקדת על הניסיון, החוזקות והשאיפות שלך..." class="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition resize-y"></textarea>
+                    <textarea x-model="personal.about" rows="4" placeholder="נוסחה: [תפקיד] + [שנות ניסיון] + [התמחות] + [הישג בולט] + [מה מחפש/ת]" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition resize-y"></textarea>
+                    <p class="text-[10px] mt-1" :class="(personal.about || '').length === 0 ? 'text-slate-400' : (personal.about || '').length < 40 ? 'text-amber-600' : (personal.about || '').length > 600 ? 'text-amber-600' : 'text-emerald-600'">
+                        <span x-show="(personal.about || '').length > 0" x-text="(personal.about || '').length + ' תווים'"></span>
+                        <span x-show="(personal.about || '').length > 0 && (personal.about || '').length < 40"> — קצר, הוסיפו עוד</span>
+                        <span x-show="(personal.about || '').length >= 40 && (personal.about || '').length <= 600"> — אורך טוב</span>
+                        <span x-show="(personal.about || '').length > 600"> — ארוך מדי</span>
+                    </p>
                 </div>
 
                 <!-- ===== SECTION MANAGER ===== -->
@@ -320,6 +330,41 @@
                                 <button @click="addItem(sid)" class="text-indigo-600 hover:text-indigo-800 text-xs font-bold bg-indigo-50 px-2.5 py-1 rounded transition" x-text="'+ ' + (sectionDefs[sid]?.addLabel || 'הוסף')"></button>
                             </div>
                         </div>
+
+                        <!-- Action Verbs Helper (experience only) -->
+                        <div x-show="sid === 'experience' && showVerbHelper" x-transition class="mb-4 bg-indigo-50/60 rounded-xl p-4 border border-indigo-100">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-xs font-bold text-indigo-800">פעלי פעולה להתחלת משפטים</h4>
+                                <button @click="showVerbHelper = false" class="text-indigo-400 hover:text-indigo-600 text-sm">&times;</button>
+                            </div>
+                            <div class="space-y-2">
+                                <template x-for="(verbs, category) in actionVerbs" :key="category">
+                                    <div>
+                                        <span class="text-[10px] font-bold text-indigo-600 uppercase" x-text="category"></span>
+                                        <div class="flex flex-wrap gap-1 mt-0.5">
+                                            <template x-for="verb in verbs" :key="verb">
+                                                <span class="inline-block text-[11px] bg-white text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-200 cursor-default" x-text="verb"></span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-indigo-200/60">
+                                <h4 class="text-[10px] font-bold text-indigo-800 mb-1.5">נוסחאות להישגים</h4>
+                                <template x-for="(f, i) in achievementFormulas" :key="i">
+                                    <div class="mb-2">
+                                        <p class="text-[10px] text-indigo-500 font-mono" x-text="f.formula"></p>
+                                        <p class="text-[11px] text-indigo-800" x-text="f.example"></p>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <button x-show="sid === 'experience' && !showVerbHelper" @click="showVerbHelper = true"
+                                class="mb-3 text-[11px] text-indigo-500 hover:text-indigo-700 font-medium transition flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                            פעלי פעולה ונוסחאות להישגים
+                        </button>
+
                         <p x-show="!$data[sid] || $data[sid].length === 0" class="text-xs text-slate-400 text-center py-4" x-text="sectionDefs[sid]?.emptyLabel || 'אין פריטים עדיין.'"></p>
                         <div class="space-y-4">
                             <template x-for="(item, index) in $data[sid]" :key="index">
@@ -330,12 +375,23 @@
                                     <div class="grid grid-cols-2 gap-3">
                                         <template x-for="field in sectionDefs[sid]?.fields || []" :key="field.key">
                                             <div :class="field.span === 2 ? 'col-span-2' : 'col-span-2 sm:col-span-1'">
-                                                <label class="block text-[10px] font-semibold text-slate-500" x-text="field.label"></label>
+                                                <label class="flex items-center gap-1 text-[10px] font-semibold text-slate-500">
+                                                    <span x-text="field.label"></span>
+                                                    <button x-show="fieldTip(sid, field.key)?.good"
+                                                            @click="openFieldHelper(sid, field.key)"
+                                                            class="text-indigo-400 hover:text-indigo-600 leading-none" title="דוגמה">
+                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                    </button>
+                                                </label>
                                                 <template x-if="field.type === 'textarea'">
-                                                    <textarea x-model="item[field.key]" :rows="field.rows || 2" :placeholder="field.placeholder || ''" class="w-full text-xs bg-white border border-slate-200 rounded p-1.5 focus:ring-1 focus:ring-indigo-500 outline-none resize-y"></textarea>
+                                                    <textarea x-model="item[field.key]" :rows="field.rows || 2"
+                                                              :placeholder="fieldTip(sid, field.key)?.hint || field.placeholder || ''"
+                                                              class="w-full text-xs bg-white border border-slate-200 rounded p-1.5 focus:ring-1 focus:ring-indigo-500 outline-none resize-y"></textarea>
                                                 </template>
                                                 <template x-if="field.type !== 'textarea'">
-                                                    <input type="text" x-model="item[field.key]" :placeholder="field.placeholder || ''" class="w-full text-xs bg-white border border-slate-200 rounded p-1.5 focus:ring-1 focus:ring-indigo-500 outline-none">
+                                                    <input type="text" x-model="item[field.key]"
+                                                           :placeholder="fieldTip(sid, field.key)?.hint || field.placeholder || ''"
+                                                           class="w-full text-xs bg-white border border-slate-200 rounded p-1.5 focus:ring-1 focus:ring-indigo-500 outline-none">
                                                 </template>
                                             </div>
                                         </template>
@@ -415,6 +471,383 @@
         </section>
 
     </main>
+
+    <!-- ==================== FIELD HELPER POPOVER ==================== -->
+    <div x-show="showFieldHelper && fieldHelperData" x-transition.opacity.duration.150ms
+         class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm"
+         @click.self="closeFieldHelper()" style="display:none">
+        <div class="bg-white rounded-2xl shadow-2xl w-80 max-w-[90vw] overflow-hidden" dir="rtl">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center">
+                <h4 class="text-sm font-bold text-slate-800">דוגמה לשדה</h4>
+                <button @click="closeFieldHelper()" class="text-slate-400 hover:text-slate-600 text-lg leading-none">&times;</button>
+            </div>
+            <div class="p-4 space-y-3">
+                <p class="text-xs text-slate-500" x-text="fieldHelperData?.hint"></p>
+                <div x-show="fieldHelperData?.good" class="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                    <p class="text-[10px] font-bold text-emerald-700 mb-1">✅ דוגמה טובה</p>
+                    <p class="text-xs text-emerald-800 whitespace-pre-line" x-text="fieldHelperData?.good"></p>
+                </div>
+                <div x-show="fieldHelperData?.bad" class="bg-red-50 border border-red-200 rounded-lg p-3">
+                    <p class="text-[10px] font-bold text-red-700 mb-1">❌ הימנעו מ...</p>
+                    <p class="text-xs text-red-700 whitespace-pre-line line-through opacity-70" x-text="fieldHelperData?.bad"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== GUIDE WIZARD ==================== -->
+    <div x-show="wizardOpen" class="wizard-overlay" @keydown.escape.window="closeWizard()" style="display:none" x-transition.opacity.duration.200ms>
+        <div class="wizard-modal" @click.outside="closeWizard()">
+
+            <!-- Header -->
+            <div class="wizard-header">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl" x-text="wizardCurrentStep.icon"></span>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900" x-text="wizardCurrentStep.title"></h2>
+                            <p class="text-xs text-slate-500" x-text="wizardCurrentStep.subtitle"></p>
+                        </div>
+                    </div>
+                    <button @click="closeWizard()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="wizard-progress">
+                    <div class="wizard-progress-bar" :style="`width: ${wizardProgress}%`"></div>
+                </div>
+                <div class="wizard-dots">
+                    <template x-for="(step, i) in wizardSteps" :key="i">
+                        <button class="wizard-dot"
+                                :class="{ 'active': i === wizardStep, 'completed': i < wizardStep }"
+                                @click="wizardGoTo(i)"
+                                :title="step.title"></button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="wizard-body">
+
+                <!-- WELCOME step -->
+                <template x-if="wizardCurrentStep.type === 'info'">
+                    <div>
+                        <div class="text-center py-4 mb-4">
+                            <div class="text-5xl mb-4">📋</div>
+                            <p class="text-slate-600 text-sm leading-relaxed max-w-md mx-auto">המדריך יעזור לכם ליצור קורות חיים מקצועיים צעד אחר צעד, עם טיפים ודוגמאות לכל סקציה.</p>
+                        </div>
+                        <div class="wizard-tip">
+                            <template x-for="(tip, i) in wizardCurrentStep.tips" :key="i">
+                                <div class="wizard-tip-item" x-text="tip"></div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- PERSONAL step -->
+                <template x-if="wizardCurrentStep.type === 'personal'">
+                    <div>
+                        <!-- Tips (collapsible) -->
+                        <div class="wizard-tip">
+                            <template x-for="(tip, i) in wizardCurrentStep.tips.slice(0, 2)" :key="i">
+                                <div class="wizard-tip-item" x-text="tip"></div>
+                            </template>
+                        </div>
+
+                        <!-- Form fields -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <template x-for="field in wizardCurrentStep.fields" :key="field.key">
+                                <div class="wizard-field" :class="field.key === 'name' ? '' : ''">
+                                    <label>
+                                        <span x-show="field.required" class="required-mark">*</span>
+                                        <span x-text="field.label"></span>
+                                    </label>
+                                    <input type="text" x-model="personal[field.key]" :placeholder="field.placeholder">
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Example toggle -->
+                        <button @click="wizardToggleExample()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold mt-2 mb-2">
+                            <span x-text="wizardShowExample ? 'הסתר דוגמה' : 'הצג דוגמה'"></span> ↓
+                        </button>
+                        <div x-show="wizardShowExample" x-transition class="wizard-example">
+                            <div class="wizard-example-label">✅ דוגמה טובה:</div>
+                            <div class="wizard-example-content">
+                                <template x-for="field in wizardCurrentStep.fields" :key="field.key">
+                                    <div class="text-xs mb-1">
+                                        <strong x-text="field.label + ': '"></strong>
+                                        <span x-text="wizardCurrentStep.example?.[field.key] || ''"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- ABOUT step -->
+                <template x-if="wizardCurrentStep.type === 'about'">
+                    <div>
+                        <div class="wizard-tip">
+                            <template x-for="(tip, i) in wizardCurrentStep.tips.slice(0, 3)" :key="i">
+                                <div class="wizard-tip-item" x-text="tip"></div>
+                            </template>
+                        </div>
+
+                        <div class="wizard-field">
+                            <label>תקציר מקצועי</label>
+                            <textarea x-model="personal.about" rows="5" placeholder="פסקה קצרה וממוקדת על הניסיון, החוזקות והשאיפות שלך..." class="resize-y"></textarea>
+                            <p class="text-[11px] mt-1" :class="(personal.about || '').length < 40 ? 'text-amber-600' : 'text-emerald-600'">
+                                <span x-text="(personal.about || '').length"></span> תווים
+                                <span x-show="(personal.about || '').length < 40"> — כדאי להוסיף עוד</span>
+                                <span x-show="(personal.about || '').length >= 40 && (personal.about || '').length <= 600"> — אורך טוב!</span>
+                                <span x-show="(personal.about || '').length > 600"> — ארוך מדי, נסו לקצר</span>
+                            </p>
+                        </div>
+
+                        <button @click="wizardToggleExample()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold mt-1 mb-2">
+                            <span x-text="wizardShowExample ? 'הסתר דוגמאות' : 'הצג דוגמאות'"></span> ↓
+                        </button>
+                        <div x-show="wizardShowExample" x-transition>
+                            <div class="wizard-example">
+                                <div class="wizard-example-label">✅ דוגמה טובה:</div>
+                                <div class="wizard-example-content" x-text="wizardCurrentStep.example"></div>
+                            </div>
+                            <div class="wizard-bad-example">
+                                <div class="wizard-example-label">❌ דוגמה חלשה:</div>
+                                <div class="wizard-example-content" x-text="wizardCurrentStep.badExample"></div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- LIST sections (experience, education) -->
+                <template x-if="wizardCurrentStep.type === 'list'">
+                    <div>
+                        <div class="wizard-tip">
+                            <template x-for="(tip, i) in wizardCurrentStep.tips.slice(0, 3)" :key="i">
+                                <div class="wizard-tip-item" x-text="tip"></div>
+                            </template>
+                        </div>
+
+                        <!-- Existing items -->
+                        <template x-for="(item, idx) in $data[wizardCurrentStep.sectionId]" :key="idx">
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 mb-3 relative">
+                                <button @click="removeItem(wizardCurrentStep.sectionId, idx)"
+                                        class="absolute top-2 left-2 text-slate-400 hover:text-red-500 transition" title="מחק">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <template x-for="field in sectionDefs[wizardCurrentStep.sectionId]?.fields || []" :key="field.key">
+                                        <div class="wizard-field" :class="field.span === 2 ? 'col-span-2' : ''">
+                                            <label x-text="field.label"></label>
+                                            <template x-if="field.type === 'textarea'">
+                                                <textarea x-model="item[field.key]" :rows="field.rows || 2" :placeholder="field.placeholder || ''" class="resize-y"></textarea>
+                                            </template>
+                                            <template x-if="field.type !== 'textarea'">
+                                                <input type="text" x-model="item[field.key]" :placeholder="field.placeholder || ''">
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Add button -->
+                        <button @click="wizardAddItem(wizardCurrentStep.sectionId)"
+                                class="w-full py-3 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-indigo-400 hover:text-indigo-600 transition font-semibold">
+                            + <span x-text="sectionDefs[wizardCurrentStep.sectionId]?.addLabel || 'הוסף'"></span>
+                        </button>
+
+                        <!-- Example toggle -->
+                        <button @click="wizardToggleExample()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold mt-3 mb-2">
+                            <span x-text="wizardShowExample ? 'הסתר דוגמה' : 'הצג דוגמה'"></span> ↓
+                        </button>
+                        <div x-show="wizardShowExample" x-transition>
+                            <div class="wizard-example">
+                                <div class="wizard-example-label">✅ דוגמה טובה:</div>
+                                <div class="wizard-example-content">
+                                    <template x-for="field in sectionDefs[wizardCurrentStep.sectionId]?.fields || []" :key="field.key">
+                                        <div class="text-xs mb-1">
+                                            <strong x-text="field.label + ': '"></strong>
+                                            <span x-text="wizardCurrentStep.example?.[field.key] || ''"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <template x-if="wizardCurrentStep.badExample">
+                                <div class="wizard-bad-example">
+                                    <div class="wizard-example-label">❌ דוגמה חלשה:</div>
+                                    <div class="wizard-example-content">
+                                        <template x-for="field in sectionDefs[wizardCurrentStep.sectionId]?.fields || []" :key="field.key">
+                                            <div class="text-xs mb-1">
+                                                <strong x-text="field.label + ': '"></strong>
+                                                <span x-text="wizardCurrentStep.badExample?.[field.key] || ''"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- SKILLS step -->
+                <template x-if="wizardCurrentStep.type === 'skills'">
+                    <div>
+                        <div class="wizard-tip">
+                            <template x-for="(tip, i) in wizardCurrentStep.tips.slice(0, 3)" :key="i">
+                                <div class="wizard-tip-item" x-text="tip"></div>
+                            </template>
+                        </div>
+
+                        <div class="wizard-field">
+                            <label>מיומנויות (מופרדות בפסיקים)</label>
+                            <input type="text" x-model="skillsInput" @input="updateSkills()"
+                                   placeholder="React, Node.js, ניהול זמן, עבודת צוות">
+                            <p class="text-[11px] mt-1" :class="skills.length < 3 ? 'text-amber-600' : skills.length > 15 ? 'text-amber-600' : 'text-emerald-600'">
+                                <span x-text="skills.length"></span> מיומנויות
+                                <span x-show="skills.length < 3"> — כדאי להוסיף עוד</span>
+                                <span x-show="skills.length >= 3 && skills.length <= 12"> — טווח מעולה!</span>
+                                <span x-show="skills.length > 12 && skills.length <= 15"> — אפשר לקצר קצת</span>
+                                <span x-show="skills.length > 15"> — יותר מדי, נסו לצמצם</span>
+                            </p>
+                        </div>
+
+                        <!-- Current skills chips -->
+                        <div class="flex flex-wrap gap-1.5 mt-2" x-show="skills.length > 0">
+                            <template x-for="(skill, i) in skills" :key="i">
+                                <span class="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 text-xs px-2.5 py-1 rounded-full font-medium" x-text="skill"></span>
+                            </template>
+                        </div>
+
+                        <button @click="wizardToggleExample()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold mt-3 mb-2">
+                            <span x-text="wizardShowExample ? 'הסתר דוגמה' : 'הצג דוגמה'"></span> ↓
+                        </button>
+                        <div x-show="wizardShowExample" x-transition class="wizard-example">
+                            <div class="wizard-example-label">✅ דוגמה טובה:</div>
+                            <div class="wizard-example-content" x-text="wizardCurrentStep.example"></div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- LANGUAGES step -->
+                <template x-if="wizardCurrentStep.type === 'languages'">
+                    <div>
+                        <div class="wizard-tip">
+                            <template x-for="(tip, i) in wizardCurrentStep.tips.slice(0, 3)" :key="i">
+                                <div class="wizard-tip-item" x-text="tip"></div>
+                            </template>
+                        </div>
+
+                        <div class="space-y-3">
+                            <template x-for="(lang, index) in languages" :key="index">
+                                <div class="flex items-center gap-3">
+                                    <div class="wizard-field flex-1 !mb-0">
+                                        <label>שפה</label>
+                                        <input type="text" x-model="lang.name" placeholder="עברית">
+                                    </div>
+                                    <div class="wizard-field flex-1 !mb-0">
+                                        <label>רמה</label>
+                                        <input type="text" x-model="lang.level" placeholder="שפת אם">
+                                    </div>
+                                    <button @click="removeLanguage(index)" class="text-slate-400 hover:text-red-500 mt-5 p-1 transition">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                        <button @click="addLanguage()"
+                                class="w-full mt-3 py-3 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-indigo-400 hover:text-indigo-600 transition font-semibold">
+                            + הוסף שפה
+                        </button>
+
+                        <button @click="wizardToggleExample()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold mt-3 mb-2">
+                            <span x-text="wizardShowExample ? 'הסתר דוגמה' : 'הצג דוגמה'"></span> ↓
+                        </button>
+                        <div x-show="wizardShowExample" x-transition class="wizard-example">
+                            <div class="wizard-example-label">✅ דוגמה טובה:</div>
+                            <div class="wizard-example-content">
+                                <template x-for="(lang, i) in wizardCurrentStep.example" :key="i">
+                                    <div class="text-xs mb-1"><strong x-text="lang.name + ': '"></strong><span x-text="lang.level"></span></div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- SUMMARY step -->
+                <template x-if="wizardCurrentStep.type === 'summary'">
+                    <div>
+                        <div class="text-center mb-4">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-3"
+                                 :class="wizardCompletionPercent >= 80 ? 'bg-emerald-100' : wizardCompletionPercent >= 50 ? 'bg-amber-100' : 'bg-red-100'">
+                                <span class="text-2xl font-bold"
+                                      :class="wizardCompletionPercent >= 80 ? 'text-emerald-700' : wizardCompletionPercent >= 50 ? 'text-amber-700' : 'text-red-700'"
+                                      x-text="wizardCompletionPercent + '%'"></span>
+                            </div>
+                            <p class="text-sm text-slate-600"
+                               x-text="wizardCompletionPercent >= 80 ? 'מעולה! קורות החיים שלכם מוכנים' : wizardCompletionPercent >= 50 ? 'התקדמות טובה — שווה להשלים עוד סקציה או שתיים' : 'כדאי להשלים עוד כמה סקציות'"></p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <template x-for="(status, key) in wizardCompletionStatus" :key="key">
+                                <div class="wizard-checklist-item" :class="status.filled ? 'filled' : ''"
+                                     @click="wizardGoTo(wizardSteps.findIndex(s => s.id === key))"
+                                     style="cursor: pointer">
+                                    <div class="wizard-check-icon" :class="status.filled ? 'done' : 'pending'">
+                                        <span x-text="status.filled ? '✓' : '—'"></span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="text-sm font-semibold text-slate-800" x-text="sectionDefs[key]?.label || (key === 'personal' ? 'פרטים אישיים' : key === 'about' ? 'תקציר מקצועי' : key)"></span>
+                                        <span class="text-xs text-slate-400 mr-2" x-text="status.details"></span>
+                                    </div>
+                                    <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="wizard-tip mt-4">
+                            <template x-for="(tip, i) in wizardCurrentStep.tips.slice(0, 3)" :key="i">
+                                <div class="wizard-tip-item" x-text="tip"></div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="wizard-footer">
+                <div class="flex gap-2">
+                    <button @click="wizardPrev()" x-show="wizardStep > 0"
+                            class="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+                        → הקודם
+                    </button>
+                </div>
+                <div class="text-xs text-slate-400">
+                    <span x-text="wizardStep + 1"></span> / <span x-text="wizardSteps.length"></span>
+                </div>
+                <div class="flex gap-2">
+                    <template x-if="wizardStep < wizardSteps.length - 1">
+                        <div class="flex gap-2">
+                            <button @click="wizardNext()"
+                                    class="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl shadow-sm transition">
+                                הבא ←
+                            </button>
+                        </div>
+                    </template>
+                    <template x-if="wizardStep === wizardSteps.length - 1">
+                        <button @click="wizardFinish()"
+                                class="px-5 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl shadow-sm transition">
+                            סיום וחזרה לעורך
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Accessibility widget -->
     <script src="src/accessibility.js"></script>
