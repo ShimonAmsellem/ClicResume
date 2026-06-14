@@ -107,13 +107,13 @@
     }
     </script>
 
-    <!-- Google tag (gtag.js) — consent mode v2: denied by default -->
+    <!-- Google tag (gtag.js) — analytics granted by default -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F4XC4GMQLH"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('consent', 'default', {
-            analytics_storage: 'denied',
+            analytics_storage: 'granted',
             ad_storage: 'denied',
             ad_user_data: 'denied',
             ad_personalization: 'denied'
@@ -354,18 +354,14 @@
 <body class="bg-white text-slate-800 font-sans antialiased">
 
 
-    <!-- ==================== COOKIE CONSENT (GDPR-compliant) ==================== -->
-    <div id="consent-banner" style="display:none" class="fixed bottom-0 inset-x-0 z-[60] bg-slate-900/95 backdrop-blur-lg text-white p-5 shadow-2xl border-t border-slate-700">
-        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4">
+    <!-- ==================== COOKIE NOTICE ==================== -->
+    <div id="consent-banner" style="display:none" class="fixed bottom-0 inset-x-0 z-[60] bg-slate-900/95 backdrop-blur-lg text-white p-4 shadow-2xl border-t border-slate-700">
+        <div class="max-w-4xl mx-auto flex items-center gap-4">
             <div class="flex-1 text-sm text-slate-300 leading-relaxed">
-                <p class="font-bold text-white mb-1">האתר משתמש ב-cookies</p>
-                <p>אנחנו משתמשים ב-cookies של Google Analytics כדי לדעת כמה אנשים מבקרים באתר וכמה קורות חיים הורדו. <strong class="text-white">אנחנו לא אוספים תוכן קורות חיים, שמות, טלפונים או כל מידע אישי</strong> — רק סטטיסטיקות שימוש אנונימיות. האתר פועל באופן מלא גם ללא cookies.</p>
-                <a href="privacy.html" class="text-indigo-400 hover:text-indigo-300 underline text-xs mt-1 inline-block">מדיניות פרטיות מלאה</a>
+                <span class="font-bold text-white">האתר משתמש ב-cookies</span> — סטטיסטיקות שימוש אנונימיות בלבד. <strong class="text-white">אנחנו לא אוספים תוכן קורות חיים או מידע אישי.</strong>
+                <a href="privacy.html" class="text-indigo-400 hover:text-indigo-300 underline text-xs mr-1">מדיניות פרטיות</a>
             </div>
-            <div class="flex gap-3 shrink-0">
-                <button onclick="acceptConsent()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition">אישור</button>
-                <button onclick="declineConsent()" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition">דחייה</button>
-            </div>
+            <button onclick="dismissCookieNotice()" class="shrink-0 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2 px-5 rounded-xl text-sm transition">הבנתי</button>
         </div>
     </div>
 
@@ -1016,38 +1012,21 @@
             }
         })();
 
-        // ── Consent Management ──
-        const CONSENT_KEY = 'clicresume_analytics_consent';
+        // ── Cookie Notice ──
+        const NOTICE_KEY = 'clicresume_cookie_notice_seen';
 
-        function getStoredConsent() {
-            try { return localStorage.getItem(CONSENT_KEY); } catch { return null; }
-        }
-
-        function grantGtagConsent() {
-            gtag('consent', 'update', {
-                analytics_storage: 'granted'
-            });
-        }
-
-        function acceptConsent() {
-            try { localStorage.setItem(CONSENT_KEY, 'accepted'); } catch {}
-            document.getElementById('consent-banner').style.display = 'none';
-            grantGtagConsent();
-        }
-
-        function declineConsent() {
-            try { localStorage.setItem(CONSENT_KEY, 'declined'); } catch {}
+        function dismissCookieNotice() {
+            try { localStorage.setItem(NOTICE_KEY, '1'); } catch {}
             document.getElementById('consent-banner').style.display = 'none';
         }
 
-        // On page load: grant consent if already accepted, or show banner
-        (function initConsent() {
-            const consent = getStoredConsent();
-            if (consent === 'accepted') {
-                grantGtagConsent();
-            } else if (!consent) {
-                document.getElementById('consent-banner').style.display = '';
-            }
+        // Show notice once for new visitors
+        (function initCookieNotice() {
+            try {
+                if (!localStorage.getItem(NOTICE_KEY)) {
+                    document.getElementById('consent-banner').style.display = '';
+                }
+            } catch {}
         })();
     </script>
 

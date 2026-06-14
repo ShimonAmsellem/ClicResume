@@ -1,23 +1,22 @@
 # Analytics
 
-קורות חיים בקליק כולל שכבת analytics אנונימית מבוססת הסכמה (consent). שום דבר לא נטען עד שהמשתמש מאשר את באנר ה-cookies.
+קורות חיים בקליק כולל שכבת analytics אנונימית. איסוף סטטיסטיקות שימוש מתחיל מיד עם הכניסה לאתר — ללא צורך בהסכמה מפורשת. האתר מציג הודעה אינפורמטיבית חד-פעמית על השימוש ב-cookies.
 
 ## ספקים נתמכים
 
-| ספק | קובץ/SDK | דורש הסכמה? | סטטוס |
-|-----|----------|-------------|-------|
-| Google Analytics 4 | gtag.js | כן | מוכן — צריך להזין Measurement ID |
+| ספק | קובץ/SDK | פעיל מיד? | סטטוס |
+|-----|----------|-----------|-------|
+| Google Analytics 4 | gtag.js | כן | פעיל (G-F4XC4GMQLH) |
 | Vercel Web Analytics | `/_vercel/insights/script.js` | כן | מוכן — צריך להפעיל ב-Vercel |
-| Vercel Speed Insights | `/_vercel/speed-insights/script.js` | לא (נתוני ביצועים בלבד) | מוכן |
+| Vercel Speed Insights | `/_vercel/speed-insights/script.js` | כן (נתוני ביצועים בלבד) | מוכן |
 | Custom endpoint | fetch / sendBeacon | כן | תשתית מוכנה |
 
-## זרימת ההסכמה
+## הודעת cookies
 
-1. בביקור ראשון — מופיע באנר consent בתחתית המסך.
-2. המשתמש לוחץ "מאשר" → ההסכמה נשמרת ב-localStorage (`clicresume_analytics_consent = 'accepted'`) → נטענים GA4 + Vercel.
-3. המשתמש לוחץ "לא, תודה" → נשמר `'declined'` → לא נטען כלום.
-4. בביקורים הבאים — הבחירה נזכרת, הבאנר לא מופיע שוב.
-5. שינוי הסכמה — מחיקת cookies של האתר בדפדפן → הבאנר יופיע שוב.
+1. בביקור ראשון — מופיעה הודעה אינפורמטיבית בתחתית המסך: "האתר משתמש ב-cookies — סטטיסטיקות שימוש אנונימיות בלבד".
+2. המשתמש לוחץ "הבנתי" → ההודעה נסגרת ולא מופיעה שוב (`clicresume_cookie_notice_seen` ב-localStorage).
+3. האנליטיקס פעיל בכל מקרה — ההודעה היא אינפורמטיבית בלבד.
+4. אין איסוף מידע אישי או תוכן קורות חיים בשום שלב.
 
 ## אירועים
 
@@ -45,8 +44,8 @@
 | קובץ | תפקיד |
 |------|--------|
 | `src/analytics.js` | מודול מרכזי — consent, GA4, Vercel, tracking, autoInit |
-| `index.html` | באנר consent + סקריפט consent (inline, לא module) |
-| `builder.html` | באנר consent + חיבור ל-analytics.js דרך ES module |
+| `index.html` | הודעת cookies + סקריפט dismiss (inline, לא module) |
+| `builder.html` | הודעת cookies + חיבור ל-analytics.js דרך ES module |
 | `privacy.html` | דף מדיניות פרטיות מלא |
 
 ## הפעלה
