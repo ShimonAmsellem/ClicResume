@@ -113,12 +113,6 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans h-screen antialiased flex flex-col overflow-hidden" x-data="cvApp()" :class="{ 'full-preview': fullPreview }">
 
-    <!-- ==================== MOBILE NOTICE ==================== -->
-    <div id="mobile-notice" class="md:hidden fixed top-0 inset-x-0 z-[60] bg-amber-500 text-amber-950 text-center py-2.5 px-4 text-xs font-semibold shadow-md">
-        <span>האתר מותאם כרגע למחשב. תצוגת מובייל בפיתוח</span>
-        <button onclick="this.parentElement.remove()" class="mr-3 text-amber-800 hover:text-amber-950 font-black text-sm">&times;</button>
-    </div>
-
     <!-- ==================== COOKIE CONSENT (GDPR-compliant) ==================== -->
     <div id="consent-banner" style="display:none" class="fixed bottom-0 inset-x-0 z-[60] bg-slate-900/95 backdrop-blur-lg text-white p-5 shadow-2xl border-t border-slate-700">
         <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4">
@@ -135,13 +129,13 @@
     </div>
 
     <!-- ==================== HEADER ==================== -->
-    <header class="bg-slate-900 text-white px-6 py-4 flex flex-wrap items-center justify-between shadow-md no-print z-10">
-        <div class="flex items-center gap-3">
-            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
-                <img src="assets/logo-mark.svg" alt="" class="w-10 h-10 rounded-xl shadow-sm">
+    <header class="bg-slate-900 text-white px-3 py-2 sm:px-6 sm:py-4 flex flex-wrap items-center justify-between shadow-md no-print z-10">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <a href="index.html" class="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition">
+                <img src="assets/logo-mark.svg" alt="" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-sm">
                 <div>
-                    <h1 class="text-xl font-display font-extrabold tracking-tight">קורות חיים בקליק</h1>
-                    <p class="text-xs text-slate-400">מחולל קורות חיים חינמי בעברית — בזמן אמת</p>
+                    <h1 class="text-base sm:text-xl font-display font-extrabold tracking-tight">קורות חיים בקליק</h1>
+                    <p class="hidden sm:block text-xs text-slate-400">מחולל קורות חיים חינמי בעברית — בזמן אמת</p>
                 </div>
             </a>
             <span class="hidden md:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold text-emerald-200">
@@ -149,18 +143,18 @@
                 שמירה מקומית
             </span>
         </div>
-        <div class="flex flex-wrap items-center gap-2 mt-4 sm:mt-0">
-            <button @click="doSaveDraft()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2 px-3 rounded-lg text-sm border border-slate-700 transition">שמירת טיוטה</button>
-            <button @click="doLoadDraft()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2 px-3 rounded-lg text-sm border border-slate-700 transition">טעינת טיוטה</button>
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-2 sm:mt-0">
+            <button @click="doSaveDraft()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-lg text-xs sm:text-sm border border-slate-700 transition">שמירת טיוטה</button>
+            <button @click="doLoadDraft()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-lg text-xs sm:text-sm border border-slate-700 transition">טעינת טיוטה</button>
             <button @click="fullPreview = !fullPreview; activeTab = 'preview'; $nextTick(() => updatePageInfo())"
-                    class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow transition text-sm"
+                    class="hidden sm:inline-flex bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow transition text-sm"
                     x-text="fullPreview ? 'חזרה לעריכה' : 'תצוגה מלאה'"></button>
-            <button @click="doPrintCV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-5 rounded-lg shadow transition flex items-center gap-2 text-sm">
+            <button @click="doPrintCV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-1.5 px-3 sm:py-2 sm:px-5 rounded-lg shadow transition flex items-center gap-2 text-xs sm:text-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                הורדה כ-PDF
+                <span>PDF</span>
             </button>
-            <button @click="doExportImage('png')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2 px-3 rounded-lg text-sm border border-slate-700 transition">PNG</button>
-            <button @click="doExportImage('jpeg')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2 px-3 rounded-lg text-sm border border-slate-700 transition">JPEG</button>
+            <button @click="doExportImage('png')" class="hidden sm:inline-flex bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2 px-3 rounded-lg text-sm border border-slate-700 transition">PNG</button>
+            <button @click="doExportImage('jpeg')" class="hidden sm:inline-flex bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2 px-3 rounded-lg text-sm border border-slate-700 transition">JPEG</button>
 
             <!-- Demo menu -->
             <div class="relative" @click.outside="demoMenuOpen = false">
@@ -200,7 +194,7 @@
 
         <!-- ========== EDITOR PANEL ========== -->
         <section x-show="!fullPreview && (activeTab === 'edit' || isDesktop)" class="w-full lg:w-[42%] lg:max-h-[calc(100vh-72px)] bg-slate-50 border-l border-slate-200 flex flex-col no-print overflow-hidden">
-            <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
+            <div class="p-4 sm:p-6 overflow-y-auto custom-scrollbar flex-1">
 
                 <!-- Intro -->
                 <div class="bg-white border-r-4 border-indigo-500 p-4 rounded-l-md mb-6 shadow-sm">
@@ -454,19 +448,25 @@
 
         <!-- ========== PREVIEW PANEL ========== -->
         <section x-show="fullPreview || activeTab === 'preview' || isDesktop"
-                 class="w-full bg-slate-700 flex-1 overflow-auto p-4 md:p-8 flex items-start justify-center"
+                 class="w-full bg-slate-700 flex-1 overflow-auto p-4 md:p-8 flex flex-col items-center"
                  :class="fullPreview ? 'lg:w-full' : 'lg:w-[58%]'">
 
-            <div class="no-print fixed bottom-4 left-4 z-20 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold shadow-lg border border-slate-200"
-                 :class="pageCount > 1 ? 'text-amber-700' : 'text-slate-600'">
-                <span x-text="pageCount > 1 ? `${pageCount} עמודי A4` : 'עמוד A4 אחד'"></span>
-            </div>
-
-            <div class="preview-scale-container w-full flex justify-center">
-                <div class="cv-page bg-white text-slate-800 relative" dir="rtl"
-                     :class="{ 'font-sans': settings.theme !== 'classic', 'font-serif': settings.theme === 'classic' }">
-                    <div class="cv-page-shell" x-html="renderedCV"></div>
-                </div>
+            <div class="preview-scale-container w-full flex flex-col items-center"
+                 :style="`min-height: calc((${pageCount} * 297mm + ${Math.max(0, pageCount - 1)} * 24px) * var(--s) + 2rem)`">
+                <template x-for="p in pageCount" :key="p">
+                    <div class="page-frame" :style="p < pageCount ? 'margin-bottom: 24px' : ''">
+                        <div class="page-frame-viewport" :style="`height: ${a4HeightPx}px`">
+                            <div class="cv-page bg-white text-slate-800 relative" dir="rtl"
+                                 :class="{ 'font-sans': settings.theme !== 'classic', 'font-serif': settings.theme === 'classic' }"
+                                 :style="`transform: translateY(-${(p-1) * a4HeightPx}px)`">
+                                <div class="cv-page-shell" x-html="renderedCV"></div>
+                            </div>
+                        </div>
+                        <div class="page-label no-print" x-show="pageCount > 1">
+                            <span x-text="`עמוד ${p} מתוך ${pageCount}`"></span>
+                        </div>
+                    </div>
+                </template>
             </div>
         </section>
 

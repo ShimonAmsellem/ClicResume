@@ -32,6 +32,7 @@ export function registerApp() {
             saveStatus: '',
             exportStatus: '',
             pageCount: 1,
+            a4HeightPx: 1123,
             analyticsDraftStarted: false,
             analyticsCvCreated: false,
             autosaveTimer: null,
@@ -360,6 +361,14 @@ export function registerApp() {
             },
 
             // --- Page Info ---
+            _measureA4Height() {
+                const probe = document.createElement('div');
+                probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;width:210mm;height:297mm;';
+                document.body.appendChild(probe);
+                const h = probe.getBoundingClientRect().height;
+                probe.remove();
+                return h;
+            },
             updatePageInfo() {
                 this.$nextTick(() => {
                     this.pageCount = getPageCount();
@@ -403,9 +412,13 @@ export function registerApp() {
                 // Load demo data
                 this.loadDemos();
 
+                // Measure A4 page height in pixels
+                this.a4HeightPx = this._measureA4Height();
+
                 // Resize handler
                 this._resizeHandler = () => {
                     this.isDesktop = window.innerWidth >= 1024;
+                    this.a4HeightPx = this._measureA4Height();
                     this.updatePageInfo();
                 };
                 window.addEventListener('resize', this._resizeHandler);
