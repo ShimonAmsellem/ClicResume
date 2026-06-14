@@ -143,9 +143,9 @@
                 שמירה מקומית
             </span>
         </div>
-        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-2 sm:mt-0">
-            <button @click="doSaveDraft()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-lg text-xs sm:text-sm border border-slate-700 transition">שמירת טיוטה</button>
-            <button @click="doLoadDraft()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-lg text-xs sm:text-sm border border-slate-700 transition">טעינת טיוטה</button>
+        <div class="flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-0 overflow-x-auto sm:flex-wrap sm:overflow-visible max-w-full scrollbar-hide">
+            <button @click="doSaveDraft()" class="shrink-0 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-lg text-xs sm:text-sm border border-slate-700 transition whitespace-nowrap">שמירת טיוטה</button>
+            <button @click="doLoadDraft()" class="shrink-0 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-lg text-xs sm:text-sm border border-slate-700 transition whitespace-nowrap">טעינת טיוטה</button>
             <button @click="fullPreview = !fullPreview; activeTab = 'preview'; $nextTick(() => updatePageInfo())"
                     class="hidden sm:inline-flex bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow transition text-sm"
                     x-text="fullPreview ? 'חזרה לעריכה' : 'תצוגה מלאה'"></button>
@@ -172,7 +172,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
                 מדריך כתיבה
             </button>
-            <button @click="clearData()" class="bg-slate-800 hover:bg-red-900/40 text-red-400 font-medium py-2 px-4 rounded-lg text-sm border border-slate-700 hover:border-red-800/70 transition">איפוס</button>
+            <button @click="clearData()" class="shrink-0 bg-slate-800 hover:bg-red-900/40 text-red-400 font-medium py-1.5 px-2.5 sm:py-2 sm:px-4 rounded-lg text-xs sm:text-sm border border-slate-700 hover:border-red-800/70 transition whitespace-nowrap">איפוס</button>
         </div>
     </header>
 

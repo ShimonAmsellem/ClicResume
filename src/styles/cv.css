@@ -18,6 +18,10 @@
     background: #fff;
 }
 
+/* Hide scrollbar for toolbar on mobile */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
 /* Preview scaling */
 .preview-scale-container {
     --s: 0.72;
