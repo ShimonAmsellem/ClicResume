@@ -1,12 +1,16 @@
 /**
  * Banner Template — Wide gradient header with initials badge
  */
-import { esc, colors, initials, renderContactList, renderItemList, renderSkillChips, renderLanguages, sectionHeading, renderWatermark, getOrderedSections, sectionHasData, CV_SECTION_LABELS } from './base.js';
+import { esc, colors, initials, renderContactList, renderItemList, renderSkillChips, renderLanguages, sectionHeading, renderWatermark, getOrderedSections, sectionHasData, CV_SECTION_LABELS, getSectionLabels } from './base.js';
 
 export function render(data) {
     const c = colors(data.settings.color);
     const sections = getOrderedSections(data);
     const p = data.personal;
+    const profileDisplay = data.settings.profileDisplay || 'initials';
+    const lang = data.settings.cvLanguage || 'he';
+    const isLTR = lang === 'en';
+    const labels = getSectionLabels(lang);
 
     const contactItems = renderContactList(p, 'inline');
     const contactHtml = contactItems.length
@@ -16,7 +20,7 @@ export function render(data) {
     let body = '';
     for (const sid of sections) {
         if (!sectionHasData(data, sid)) continue;
-        const label = CV_SECTION_LABELS[sid] || sid;
+        const label = labels[sid] || sid;
 
         if (sid === 'about') {
             body += `<div class="mb-7">
@@ -41,10 +45,13 @@ export function render(data) {
         }
     }
 
-    return `<div class="h-full min-h-[297mm] flex flex-col">
-        <div class="px-12 pt-12 pb-9 text-white bg-gradient-to-l ${c.grad}">
+    return `<div class="h-full min-h-[297mm] flex flex-col" dir="${isLTR ? 'ltr' : 'rtl'}">
+        <div class="px-12 pt-12 pb-9 text-white ${isLTR ? 'bg-gradient-to-r' : 'bg-gradient-to-l'} ${c.grad}">
             <div class="flex items-center gap-5">
-                <div class="w-20 h-20 rounded-2xl bg-white/10 ring-1 ring-white/25 grid place-items-center font-display font-black text-3xl shrink-0">${esc(initials(p.name))}</div>
+                ${profileDisplay === 'none' ? '' :
+                  profileDisplay === 'photo' && data.settings.profilePhoto
+                    ? `<img src="${data.settings.profilePhoto}" class="w-20 h-20 rounded-2xl ring-1 ring-white/25 object-cover shrink-0" alt="">`
+                    : `<div class="w-20 h-20 rounded-2xl bg-white/10 ring-1 ring-white/25 grid place-items-center font-display font-black text-3xl shrink-0">${esc(initials(p.name))}</div>`}
                 <div>
                     <h1 class="font-display font-black text-[34px] leading-none">${esc(p.name) || 'השם שלך'}</h1>
                     <p class="text-base text-white/80 mt-1.5">${esc(p.title) || 'כותרת מקצועית'}</p>
@@ -56,5 +63,5 @@ export function render(data) {
             ${body}
         </div>
     </div>
-    ${renderWatermark(data.settings.watermark)}`;
+    ${renderWatermark(data.settings.watermark, lang)}`;
 }

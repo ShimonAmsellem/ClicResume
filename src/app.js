@@ -8,7 +8,7 @@ import { SECTION_DEFS, ALL_SECTION_IDS, DEFAULT_ORDER, DEFAULT_VISIBLE } from '.
 import { saveDraft, loadDraft, migrateFromV2 } from './storage.js';
 import { track } from './analytics.js';
 import { renderCV } from './templates/index.js';
-import { exportPdf, printPdf, getPageCount } from './export/pdf.js';
+import { exportPdf, getPageCount } from './export/pdf.js';
 import { exportImage } from './export/image.js';
 import { exportJson, importJson } from './export/json-io.js';
 import { validate, getTips, getRandomTip, getFieldTip, getFieldTips, getActionVerbs, getAchievementFormulas, getWeakWords, checkWeakWords } from './writing-tips.js';
@@ -193,9 +193,6 @@ export function registerApp() {
                     this.exportStatus = '';
                 }
             },
-            doPrintTextPdf() {
-                printPdf();
-            },
             doExportJson() {
                 const data = this._snapshot();
                 exportJson({ ...this, settings: data.settings }, this.exportFileName);
@@ -215,7 +212,7 @@ export function registerApp() {
             // --- Demos ---
             demos: {},
             async loadDemos() {
-                const demoFiles = ['data-scientist', 'marketing', 'nurse', 'accountant'];
+                const demoFiles = ['data-scientist', 'marketing', 'nurse', 'accountant', 'product-manager-en', 'software-engineer-en', 'ux-designer-en', 'finance-manager-en'];
                 for (const name of demoFiles) {
                     try {
                         const resp = await fetch(`demos/${name}.json`);

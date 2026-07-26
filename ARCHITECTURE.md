@@ -26,10 +26,9 @@
 - `index.js` מרכז את כולן ומייצא `renderCV(theme, data)`.
 
 ### 4. ייצוא (`src/export/`)
-- `pdf.js` — ייצוא PDF איכותי עם html2canvas + jsPDF. כולל חיתוך חכם בין עמודים.
+- `pdf.js` — ייצוא PDF עיצובי עם html2canvas + jsPDF. כולל חיתוך חכם בין עמודים. שומר על העיצוב המדויק של התבנית (מבוסס תמונה).
 - `image.js` — ייצוא PNG / JPEG.
 - `json-io.js` — ייבוא/ייצוא JSON לגיבוי ושיתוף.
-- `window.print()` — אפשרות הדפסה ל-PDF עם טקסט ניתן לבחירה.
 
 ### 5. אחסון (`src/storage.js`)
 - שמירה וטעינה מ-`localStorage`.
@@ -106,7 +105,7 @@
 │   │   ├── executive.js    # Executive sidebar
 │   │   └── compact.js      # Compact dense
 │   ├── export/
-│   │   ├── pdf.js          # PDF export
+│   │   ├── pdf.js          # PDF export (image-based, design-accurate)
 │   │   ├── image.js        # PNG/JPEG export
 │   │   └── json-io.js      # JSON import/export
 │   └── styles/
@@ -128,7 +127,7 @@
 
 - **Alpine.js 3** — ריאקטיביות וניהול מצב
 - **Tailwind CSS (CDN)** — עיצוב
-- **html2canvas + jsPDF** — ייצוא PDF ותמונה
+- **html2canvas + jsPDF** — ייצוא PDF עיצובי ותמונה
 - **ES Modules** — מודולריות ללא build
 - **Google Fonts** — Assistant, Heebo, Frank Ruhl Libre
 

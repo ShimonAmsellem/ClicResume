@@ -1,9 +1,9 @@
 /**
  * Compact Template — Dense single column, grid timeline
  */
-import { esc, colors, renderContactList, renderItemList, renderSkillChips, renderLanguages, sectionHeading, renderWatermark, getOrderedSections, sectionHasData, CV_SECTION_LABELS, hasBullets, descLines } from './base.js';
+import { esc, colors, renderContactList, renderItemList, renderSkillChips, renderLanguages, sectionHeading, renderWatermark, getOrderedSections, sectionHasData, CV_SECTION_LABELS, getSectionLabels, hasBullets, descLines } from './base.js';
 
-function renderCompactGrid(items, colorHex) {
+function renderCompactGrid(items, colorHex, dir = 'rtl') {
     return items.map(item => {
         const title = item.role || item.degree || item.name || '';
         const subtitle = item.company || item.institution || item.unit || item.organization || item.issuer || '';
@@ -22,7 +22,7 @@ function renderCompactGrid(items, colorHex) {
         const techLine = item.technologies ? `<p class="text-[10.5px] text-slate-500 mb-0.5">${esc(item.technologies)}</p>` : '';
 
         return `<div class="grid grid-cols-4 gap-3">
-            <div class="col-span-1 text-[10.5px] text-slate-400 ltr text-right pt-0.5">${esc(period)}</div>
+            <div class="col-span-1 text-[10.5px] text-slate-400 ltr ${dir === 'ltr' ? 'text-left' : 'text-right'} pt-0.5">${esc(period)}</div>
             <div class="col-span-3">
                 <h4 class="text-[12.5px] font-bold text-slate-800 leading-tight">${esc(title)}</h4>
                 ${subtitle ? `<p class="text-[11.5px] font-semibold mb-1" style="color:${colorHex}">${esc(subtitle)}</p>` : ''}
@@ -36,6 +36,9 @@ export function render(data) {
     const c = colors(data.settings.color);
     const sections = getOrderedSections(data);
     const p = data.personal;
+    const lang = data.settings.cvLanguage || 'he';
+    const isLTR = lang === 'en';
+    const labels = getSectionLabels(lang);
 
     const contactItems = renderContactList(p, 'inline');
     const contactHtml = contactItems.length
@@ -45,7 +48,7 @@ export function render(data) {
     let body = '';
     for (const sid of sections) {
         if (!sectionHasData(data, sid)) continue;
-        const label = CV_SECTION_LABELS[sid] || sid;
+        const label = labels[sid] || sid;
 
         if (sid === 'about') {
             body += `<p class="text-[12px] text-slate-600 leading-relaxed mb-5">${esc(p.about)}</p>`;
@@ -62,12 +65,12 @@ export function render(data) {
         } else {
             body += `<div class="mb-5">
                 ${sectionHeading(label, data.settings.color, 'compact-upper')}
-                <div class="space-y-3.5">${renderCompactGrid(data[sid] || [], c.hex)}</div>
+                <div class="space-y-3.5">${renderCompactGrid(data[sid] || [], c.hex, isLTR ? 'ltr' : 'rtl')}</div>
             </div>`;
         }
     }
 
-    return `<div class="px-12 pt-14 pb-12 h-full min-h-[297mm]">
+    return `<div class="px-12 pt-14 pb-12 h-full min-h-[297mm]" dir="${isLTR ? 'ltr' : 'rtl'}">
         <div class="pb-3 mb-5 border-b-2 ${c.border}">
             <h1 class="text-[30px] font-display font-black leading-none text-slate-900">${esc(p.name) || 'השם שלך'}</h1>
             <p class="text-[13px] font-semibold mt-1 ${c.text}">${esc(p.title) || 'כותרת מקצועית'}</p>
@@ -75,5 +78,5 @@ export function render(data) {
         </div>
         ${body}
     </div>
-    ${renderWatermark(data.settings.watermark)}`;
+    ${renderWatermark(data.settings.watermark, lang)}`;
 }

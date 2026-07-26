@@ -1,5 +1,7 @@
 # יומן שינויים — ClicResume
 
+---
+
 ## יוני 2026 — שלב 3: שיפור חוויית כתיבה
 
 ### מדריך כתיבה (Wizard)
@@ -134,7 +136,7 @@
 - דוגמאות נוספות לפי מקצועות (שלב 3 — אחרון)
 - תמיכה באנגלית ו-LTR (שלב 4)
 - תבניות נוספות מותאמות לענפים (שלב 4)
-- PDF עם טקסט ניתן לבחירה — pdfmake (שלב 5)
+- PDF עם טקסט ניתן לבחירה (שלב 5 — טרם הושלם)
 - ייצוא DOCX (שלב 5)
 - דף "איך לכתוב קורות חיים טובים" (שלב 6)
 
@@ -158,7 +160,7 @@ src/
   templates/        # 6 תבניות CV (modern, classic, minimal, banner, executive, compact)
     base.js         # קומפוננטות משותפות + watermark
     index.js        # טעינת תבניות
-  export/           # ייצוא PDF / תמונה / JSON
+  export/           # ייצוא PDF (עיצובי + ATS) / תמונה / JSON
   styles/
     app.css         # סגנונות עורך (tip-popover, drag, validation)
     cv.css          # סגנונות קורות חיים

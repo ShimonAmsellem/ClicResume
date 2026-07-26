@@ -1,0 +1,68 @@
+{
+    "label": "Sarah Cohen · Product Manager",
+    "personal": {
+        "name": "Sarah Cohen",
+        "title": "Senior Product Manager",
+        "phone": "+972-54-123-4567",
+        "email": "sarah.cohen@techflow.io",
+        "location": "Tel Aviv, Israel",
+        "linkedin": "linkedin.com/in/sarahcohen",
+        "website": "www.techflow.io",
+        "github": "",
+        "about": "Senior Product Manager with 7+ years of experience building B2B SaaS products from zero to scale. Strong background in data-driven decision making, cross-functional team leadership, and delivering products that drive measurable business impact. Passionate about translating complex user needs into elegant product solutions."
+    },
+    "experience": [
+        {
+            "company": "TechFlow Inc.",
+            "role": "Senior Product Manager",
+            "period": "2022 - Present",
+            "description": "Led the end-to-end product lifecycle for the company's core analytics platform, serving 500+ enterprise clients\nDefined and executed a product roadmap that increased user retention by 34% year-over-year\nManaged a cross-functional team of 12 engineers, 3 designers, and 2 data scientists\nIntroduced OKR-driven planning that improved feature delivery velocity by 25%"
+        },
+        {
+            "company": "DataBridge Solutions",
+            "role": "Product Manager",
+            "period": "2019 - 2022",
+            "description": "Owned the integration marketplace product, growing partner ecosystem from 15 to 80+ integrations\nConducted 200+ customer interviews to identify pain points and validate product hypotheses\nReduced customer onboarding time from 14 days to 3 days through UX improvements"
+        },
+        {
+            "company": "StartupNation Labs",
+            "role": "Associate Product Manager",
+            "period": "2017 - 2019",
+            "description": "Assisted in launching an MVP mobile app that reached 50K downloads in the first quarter\nCreated detailed PRDs and user stories for the engineering team"
+        }
+    ],
+    "education": [
+        {
+            "institution": "Tel Aviv University",
+            "degree": "MBA, Technology Management",
+            "period": "2015 - 2017",
+            "description": "Graduated with honors. Focused on technology strategy and innovation management."
+        },
+        {
+            "institution": "Hebrew University of Jerusalem",
+            "degree": "B.Sc. Industrial Engineering",
+            "period": "2011 - 2014",
+            "description": "Dean's List. Specialization in information systems and optimization."
+        }
+    ],
+    "military": [],
+    "volunteering": [],
+    "projects": [],
+    "certifications": [],
+    "skills": ["Product Strategy", "Agile/Scrum", "SQL", "Figma", "Jira", "A/B Testing", "User Research", "Data Analysis"],
+    "languages": [
+        { "name": "Hebrew", "level": "Native" },
+        { "name": "English", "level": "Fluent" }
+    ],
+    "settings": {
+        "theme": "modern",
+        "color": "indigo",
+        "cvLanguage": "en",
+        "fontFamily": "heebo_noto",
+        "fontSize": "medium",
+        "profileDisplay": "initials",
+        "watermark": true,
+        "sectionOrder": ["about", "experience", "education", "skills", "languages"],
+        "visibleSections": ["about", "experience", "education", "skills", "languages"]
+    }
+}

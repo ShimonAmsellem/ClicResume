@@ -1,0 +1,81 @@
+{
+    "label": "James Mitchell · Finance Manager",
+    "personal": {
+        "name": "James Mitchell",
+        "title": "Finance Manager",
+        "phone": "+1-212-555-0147",
+        "email": "j.mitchell@capitalgroup.com",
+        "location": "New York, NY",
+        "linkedin": "linkedin.com/in/jamesmitchell",
+        "website": "",
+        "github": "",
+        "about": "Finance Manager with 10 years of experience in financial planning, analysis, and reporting for multinational corporations. CPA and CFA charterholder with expertise in budgeting, forecasting, and strategic financial modeling. Known for translating complex financial data into actionable business insights."
+    },
+    "experience": [
+        {
+            "company": "Capital Group International",
+            "role": "Finance Manager",
+            "period": "2021 - Present",
+            "description": "Managing a $50M annual operating budget across 3 business units with a team of 6 analysts\nDeveloped a rolling forecast model that improved budget accuracy from 85% to 96%\nLed the financial due diligence for 2 acquisitions totaling $15M\nPresenting monthly financial reviews to the executive leadership team and board of directors"
+        },
+        {
+            "company": "Deloitte",
+            "role": "Senior Financial Analyst",
+            "period": "2017 - 2021",
+            "description": "Provided financial advisory services to Fortune 500 clients across technology and healthcare sectors\nBuilt complex financial models for M&A transactions and capital restructuring\nManaged audit engagements for publicly traded companies"
+        },
+        {
+            "company": "Goldman Sachs",
+            "role": "Financial Analyst",
+            "period": "2014 - 2017",
+            "description": "Performed valuation analysis and financial modeling for investment banking division\nSupported deal execution for IPOs and debt offerings totaling $2B+"
+        }
+    ],
+    "education": [
+        {
+            "institution": "Columbia Business School",
+            "degree": "MBA, Finance",
+            "period": "2012 - 2014",
+            "description": "Beta Gamma Sigma honor society. Concentration in Corporate Finance."
+        },
+        {
+            "institution": "University of Pennsylvania",
+            "degree": "B.S. Economics",
+            "period": "2008 - 2012",
+            "description": "Magna Cum Laude. Minor in Statistics."
+        }
+    ],
+    "military": [],
+    "volunteering": [],
+    "projects": [],
+    "certifications": [
+        {
+            "name": "CFA Charterholder",
+            "issuer": "CFA Institute",
+            "date": "2019",
+            "description": ""
+        },
+        {
+            "name": "CPA",
+            "issuer": "AICPA",
+            "date": "2016",
+            "description": ""
+        }
+    ],
+    "skills": ["Financial Modeling", "Budgeting & Forecasting", "M&A Due Diligence", "Excel / VBA", "Power BI", "SAP", "GAAP / IFRS", "Strategic Planning"],
+    "languages": [
+        { "name": "English", "level": "Native" },
+        { "name": "Spanish", "level": "Professional" }
+    ],
+    "settings": {
+        "theme": "executive",
+        "color": "slate",
+        "cvLanguage": "en",
+        "fontFamily": "heebo_noto",
+        "fontSize": "medium",
+        "profileDisplay": "initials",
+        "watermark": true,
+        "sectionOrder": ["about", "experience", "education", "certifications", "skills", "languages"],
+        "visibleSections": ["about", "experience", "education", "certifications", "skills", "languages"]
+    }
+}

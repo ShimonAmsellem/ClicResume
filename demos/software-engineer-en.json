@@ -1,0 +1,83 @@
+{
+    "label": "Daniel Roberts · Software Engineer",
+    "personal": {
+        "name": "Daniel Roberts",
+        "title": "Full Stack Developer",
+        "phone": "+44-20-7946-0958",
+        "email": "daniel.roberts@cloudbase.dev",
+        "location": "London, UK",
+        "linkedin": "linkedin.com/in/danielroberts",
+        "website": "",
+        "github": "github.com/droberts",
+        "about": "Full Stack Developer with 6 years of experience building scalable web applications and microservices. Proficient in modern JavaScript/TypeScript ecosystems, cloud infrastructure, and DevOps practices. Open source contributor with a passion for clean code and developer experience."
+    },
+    "experience": [
+        {
+            "company": "CloudBase",
+            "role": "Senior Full Stack Developer",
+            "period": "2021 - Present",
+            "description": "Architected and built a real-time collaboration platform using React, Node.js, and WebSocket, serving 100K+ concurrent users\nDesigned a microservices migration strategy that reduced deployment time by 60%\nMentored 4 junior developers and led code review practices across the team\nImplemented CI/CD pipelines with GitHub Actions, achieving 99.8% deployment success rate"
+        },
+        {
+            "company": "FinTech Global",
+            "role": "Backend Developer",
+            "period": "2019 - 2021",
+            "description": "Built RESTful APIs and event-driven services for a payment processing platform handling $2M+ daily transactions\nOptimized database queries, reducing average response time from 450ms to 80ms\nIntegrated third-party payment providers (Stripe, PayPal) with comprehensive error handling"
+        },
+        {
+            "company": "WebStudio Agency",
+            "role": "Junior Developer",
+            "period": "2018 - 2019",
+            "description": "Developed responsive websites and web applications for 20+ clients using React and Vue.js\nContributed to the agency's internal component library"
+        }
+    ],
+    "education": [
+        {
+            "institution": "University of Manchester",
+            "degree": "B.Sc. Computer Science",
+            "period": "2014 - 2018",
+            "description": "First Class Honours. Final year project on distributed systems won the department award."
+        }
+    ],
+    "military": [],
+    "volunteering": [
+        {
+            "organization": "Code Your Future",
+            "role": "Volunteer Mentor",
+            "period": "2020 - Present",
+            "description": "Teaching coding fundamentals to refugees and displaced people transitioning into tech careers"
+        }
+    ],
+    "projects": [
+        {
+            "name": "OpenTrack",
+            "description": "Open source project management tool built with Next.js and PostgreSQL",
+            "technologies": "Next.js, TypeScript, PostgreSQL, Prisma",
+            "link": "github.com/droberts/opentrack"
+        }
+    ],
+    "certifications": [
+        {
+            "name": "AWS Solutions Architect Associate",
+            "issuer": "Amazon Web Services",
+            "date": "2023",
+            "description": ""
+        }
+    ],
+    "skills": ["TypeScript", "React", "Node.js", "PostgreSQL", "AWS", "Docker", "GraphQL", "Redis"],
+    "languages": [
+        { "name": "English", "level": "Native" },
+        { "name": "French", "level": "Intermediate" }
+    ],
+    "settings": {
+        "theme": "minimal",
+        "color": "slate",
+        "cvLanguage": "en",
+        "fontFamily": "heebo_noto",
+        "fontSize": "medium",
+        "profileDisplay": "none",
+        "watermark": true,
+        "sectionOrder": ["about", "experience", "education", "projects", "certifications", "skills", "languages", "volunteering"],
+        "visibleSections": ["about", "experience", "education", "projects", "certifications", "skills", "languages", "volunteering"]
+    }
+}

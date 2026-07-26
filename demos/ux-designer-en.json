@@ -1,0 +1,69 @@
+{
+    "label": "Maya Lin · UX Designer",
+    "personal": {
+        "name": "Maya Lin",
+        "title": "Lead UX/UI Designer",
+        "phone": "+1-415-555-0192",
+        "email": "maya.lin@designcraft.co",
+        "location": "San Francisco, CA",
+        "linkedin": "linkedin.com/in/mayalin",
+        "website": "mayalin.design",
+        "github": "",
+        "about": "Lead UX/UI Designer with 8 years of experience crafting intuitive digital products for B2B and B2C companies. Skilled in user research, interaction design, and design systems. Proven track record of increasing conversion rates and user satisfaction through data-informed design decisions."
+    },
+    "experience": [
+        {
+            "company": "DesignCraft Co.",
+            "role": "Lead UX/UI Designer",
+            "period": "2022 - Present",
+            "description": "Leading a design team of 5, establishing design standards and workflows for a SaaS platform with 200K+ users\nCreated a comprehensive design system with 120+ components, reducing design-to-development handoff time by 40%\nConducted usability studies that informed a checkout redesign, resulting in a 28% increase in conversion\nCollaborated closely with product and engineering to define and prioritize the design roadmap"
+        },
+        {
+            "company": "Notion Labs",
+            "role": "Senior Product Designer",
+            "period": "2019 - 2022",
+            "description": "Designed core features for the collaboration workspace used by 30M+ users globally\nLed the redesign of the mobile experience, increasing mobile DAU by 45%\nFacilitated design sprints and workshops with cross-functional stakeholders"
+        },
+        {
+            "company": "Startup Studio SF",
+            "role": "UI/UX Designer",
+            "period": "2016 - 2019",
+            "description": "Designed end-to-end experiences for 10+ early-stage startups across fintech, health, and education\nBuilt wireframes, prototypes, and high-fidelity mockups using Figma and Sketch"
+        }
+    ],
+    "education": [
+        {
+            "institution": "Rhode Island School of Design (RISD)",
+            "degree": "BFA, Graphic Design",
+            "period": "2012 - 2016",
+            "description": "Minor in Computer Science. Senior thesis on accessible interface design."
+        }
+    ],
+    "military": [],
+    "volunteering": [],
+    "projects": [],
+    "certifications": [
+        {
+            "name": "Google UX Design Professional Certificate",
+            "issuer": "Google / Coursera",
+            "date": "2021",
+            "description": ""
+        }
+    ],
+    "skills": ["Figma", "Design Systems", "User Research", "Prototyping", "Interaction Design", "Accessibility", "HTML/CSS", "Framer"],
+    "languages": [
+        { "name": "English", "level": "Native" },
+        { "name": "Mandarin", "level": "Conversational" }
+    ],
+    "settings": {
+        "theme": "banner",
+        "color": "rose",
+        "cvLanguage": "en",
+        "fontFamily": "heebo_noto",
+        "fontSize": "medium",
+        "profileDisplay": "initials",
+        "watermark": true,
+        "sectionOrder": ["about", "experience", "education", "certifications", "skills", "languages"],
+        "visibleSections": ["about", "experience", "education", "certifications", "skills", "languages"]
+    }
+}

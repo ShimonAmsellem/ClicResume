@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחולל חתימות מייל | קורות חיים בקליק</title>
+    <meta name="description" content="צרו חתימת מייל מקצועית בעברית או באנגלית — בחרו תבנית, מלאו פרטים והעתיקו ישירות למייל. חינם, פרטי, בלי רישום.">
+    <meta name="keywords" content="חתימת מייל, email signature, חתימה למייל, חתימת מייל בעברית, מחולל חתימה, email signature generator Hebrew">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="assets/logo-mark.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#1f2933">
+    <link rel="canonical" href="https://clicresume.com/signature.html">
+
+    <meta property="og:title" content="מחולל חתימות מייל — קורות חיים בקליק">
+    <meta property="og:description" content="חתימת מייל מקצועית בעברית או באנגלית. חינם, פרטי, בלי רישום.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clicresume.com/signature.html">
+    <meta property="og:image" content="https://clicresume.com/assets/og-image.png">
+    <meta property="og:locale" content="he_IL">
+    <meta property="og:site_name" content="קורות חיים בקליק">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F4XC4GMQLH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+        gtag('js', new Date());
+        gtag('config', 'G-F4XC4GMQLH', { anonymize_ip: true });
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine loaded at end of body, after sigApp definition -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg: #f5f1e8;
+            --paper: #fffdf8;
+            --ink: #1f2933;
+            --muted: #6b7280;
+            --line: #d6ccba;
+            --accent: #9a3412;
+            --accent-soft: #c2410c;
+            --accent-quiet: rgba(154, 52, 18, 0.08);
+        }
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, rgba(255,253,248,0.96), rgba(245,241,232,0.96)),
+                repeating-linear-gradient(90deg, transparent 0, transparent 79px, rgba(31,41,51,0.03) 79px, rgba(31,41,51,0.03) 80px);
+            color: var(--ink);
+        }
+        .field-input {
+            width: 100%;
+            padding: 0.55rem 0.85rem;
+            border: 1px solid var(--line);
+            border-radius: 0.75rem;
+            background: var(--paper);
+            font-size: 0.85rem;
+            color: var(--ink);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .field-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-quiet);
+        }
+        .template-btn {
+            padding: 0.45rem 0.9rem;
+            border: 1.5px solid var(--line);
+            border-radius: 0.75rem;
+            background: var(--paper);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .template-btn:hover { border-color: var(--accent); }
+        .template-btn.active {
+            border-color: var(--accent);
+            background: var(--accent-quiet);
+            color: var(--accent);
+        }
+        .copy-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.65rem 1.2rem; border-radius: 9999px;
+            background: var(--ink); color: #fff; font-weight: 700;
+            font-size: 0.85rem; border: none; cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .copy-btn:hover { background: var(--accent); }
+        .copy-btn.copied { background: #047857; }
+        .dl-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.65rem 1.2rem; border-radius: 9999px;
+            background: transparent; color: var(--ink); font-weight: 600;
+            font-size: 0.85rem; border: 1.5px solid var(--line);
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .color-dot {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 2.5px solid transparent; cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+        .color-dot:hover { transform: scale(1.15); }
+        .color-dot.active { border-color: var(--ink); transform: scale(1.15); }
+        .gmail-dot { width: 10px; height: 10px; border-radius: 50%; }
+    </style>
+</head>
+<body class="font-sans" x-data="sigApp()" x-init="init()">
+
+    <!-- NAV -->
+    <nav class="fixed top-0 inset-x-0 z-50" style="background:rgba(255,253,248,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(31,41,51,0.08);box-shadow:0 14px 30px rgba(31,41,51,0.08)">
+        <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+            <a href="index.html" class="flex items-center gap-2 font-bold text-lg" style="color:var(--ink);text-decoration:none">
+                <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background:linear-gradient(135deg,rgba(154,52,18,0.12),rgba(36,64,52,0.12));border:1px solid rgba(31,41,51,0.08)">
+                    <img src="assets/logo-mark.svg" alt="" class="w-5 h-5">
+                </span>
+                קורות חיים בקליק
+            </a>
+            <div class="flex items-center gap-5 text-sm font-medium" style="color:var(--muted)">
+                <a href="builder.html" class="hover:text-[#9a3412] transition-colors">בניית קורות חיים</a>
+                <a href="index.html" class="hover:text-[#9a3412] transition-colors">דף הבית</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="max-w-6xl mx-auto px-4 pt-20 pb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+            <!-- FORM PANEL (RIGHT in RTL = first in DOM) -->
+            <div class="lg:col-span-2 lg:sticky lg:top-20 lg:self-start space-y-5">
+                <div class="rounded-2xl p-5 space-y-4" style="background:var(--paper);border:1px solid rgba(31,41,51,0.06);box-shadow:0 12px 30px rgba(31,41,51,0.06)">
+                    <h2 class="text-lg font-bold" style="color:var(--ink)" x-text="dir==='rtl'?'פרטי החתימה':'Signature Details'"></h2>
+
+                    <!-- Basic fields -->
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'שם מלא':'Full Name'"></label>
+                            <input type="text" class="field-input" x-model="name" :placeholder="dir==='rtl'?'ישראל ישראלי':'John Doe'">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'תפקיד':'Title'"></label>
+                            <input type="text" class="field-input" x-model="title" :placeholder="dir==='rtl'?'מנהל/ת מוצר':'Product Manager'">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'חברה':'Company'"></label>
+                            <input type="text" class="field-input" x-model="company" :placeholder="dir==='rtl'?'חברה בע״מ':'Company Inc.'">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'טלפון':'Phone'"></label>
+                                <input type="tel" class="field-input" x-model="phone" placeholder="050-000-0000" dir="ltr">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'אימייל':'Email'"></label>
+                                <input type="email" class="field-input" x-model="email" placeholder="name@email.com" dir="ltr">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'אתר':'Website'"></label>
+                            <input type="url" class="field-input" x-model="website" placeholder="https://example.com" dir="ltr">
+                        </div>
+                    </div>
+
+                    <!-- Social media collapsible -->
+                    <div>
+                        <button @click="showSocial=!showSocial" class="flex items-center gap-2 text-sm font-semibold w-full" style="color:var(--accent);background:none;border:none;cursor:pointer;padding:0">
+                            <svg :class="showSocial?'rotate-90':''" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            <span x-text="dir==='rtl'?'רשתות חברתיות':'Social Media'"></span>
+                        </button>
+                        <div x-show="showSocial" x-collapse class="mt-3 grid grid-cols-2 gap-3">
+                            <template x-for="s in socialFields" :key="s.key">
+                                <div>
+                                    <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="s.label"></label>
+                                    <input type="url" class="field-input" x-model="social[s.key]" :placeholder="s.placeholder" dir="ltr">
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Photo upload -->
+                    <div>
+                        <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'תמונה (אופציונלי)':'Photo (optional)'"></label>
+                        <div class="flex items-center gap-3">
+                            <label class="text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer" style="background:var(--accent-quiet);color:var(--accent);border:1px solid rgba(154,52,18,0.15)">
+                                <span x-text="dir==='rtl'?'בחירת תמונה':'Choose Photo'"></span>
+                                <input type="file" accept="image/*" class="hidden" @change="handlePhoto($event)">
+                            </label>
+                            <template x-if="photo">
+                                <div class="flex items-center gap-2">
+                                    <img :src="photo" class="w-8 h-8 rounded-full object-cover">
+                                    <button @click="photo=''" class="text-xs" style="color:var(--muted);background:none;border:none;cursor:pointer" x-text="dir==='rtl'?'הסרה':'Remove'"></button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Color picker -->
+                    <div>
+                        <label class="block text-xs font-medium mb-2" style="color:var(--muted)" x-text="dir==='rtl'?'צבע מותג':'Brand Color'"></label>
+                        <div class="flex gap-2 flex-wrap">
+                            <template x-for="c in colors" :key="c">
+                                <button class="color-dot" :class="color===c?'active':''" :style="`background:${c}`" @click="color=c"></button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Template selector -->
+                    <div>
+                        <label class="block text-xs font-medium mb-2" style="color:var(--muted)" x-text="dir==='rtl'?'תבנית':'Template'"></label>
+                        <div class="flex gap-2 flex-wrap">
+                            <template x-for="t in templates" :key="t.id">
+                                <button class="template-btn" :class="template===t.id?'active':''" @click="template=t.id" x-text="dir==='rtl'?t.he:t.en"></button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Direction toggle -->
+                    <div>
+                        <label class="block text-xs font-medium mb-2" style="color:var(--muted)" x-text="dir==='rtl'?'כיוון':'Direction'"></label>
+                        <div class="flex gap-2">
+                            <button class="template-btn" :class="dir==='rtl'?'active':''" @click="dir='rtl'">RTL (עברית)</button>
+                            <button class="template-btn" :class="dir==='ltr'?'active':''" @click="dir='ltr'">LTR (English)</button>
+                        </div>
+                    </div>
+
+                    <!-- Demo loader -->
+                    <div>
+                        <label class="block text-xs font-medium mb-1" style="color:var(--muted)" x-text="dir==='rtl'?'טעינת דוגמה':'Load Demo'"></label>
+                        <select class="field-input" @change="loadDemo($event.target.value);$event.target.value=''">
+                            <option value="" x-text="dir==='rtl'?'בחירת דוגמה...':'Choose a demo...'"></option>
+                            <optgroup label="English">
+                                <template x-for="d in demos.filter(d=>d.dir==='ltr')" :key="d.name">
+                                    <option :value="d.name" x-text="d.name+' — '+d.title"></option>
+                                </template>
+                            </optgroup>
+                            <optgroup label="עברית">
+                                <template x-for="d in demos.filter(d=>d.dir==='rtl')" :key="d.name">
+                                    <option :value="d.name" x-text="d.name+' — '+d.title"></option>
+                                </template>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="flex gap-3 pt-2">
+                        <button class="copy-btn" :class="copied?'copied':''" @click="copySignature()">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                            <span x-text="copied?(dir==='rtl'?'הועתק!':'Copied!'):(dir==='rtl'?'העתקת חתימה':'Copy Signature')"></span>
+                        </button>
+                        <button class="dl-btn" @click="downloadSignature()">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span x-text="dir==='rtl'?'הורדה כ-HTML':'Download HTML'"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREVIEW PANEL (LEFT in RTL) -->
+            <div class="lg:col-span-3 space-y-4">
+                <h2 class="text-lg font-bold" style="color:var(--ink)" x-text="dir==='rtl'?'תצוגה מקדימה':'Preview'"></h2>
+
+                <!-- Gmail mockup -->
+                <div class="rounded-2xl overflow-hidden" style="background:#fff;border:1px solid rgba(31,41,51,0.08);box-shadow:0 12px 30px rgba(31,41,51,0.06)">
+                    <div class="flex items-center gap-3 px-4 py-2.5" style="background:#f8f9fa;border-bottom:1px solid #e8eaed">
+                        <div class="flex gap-1.5">
+                            <span class="gmail-dot" style="background:#ff5f57"></span>
+                            <span class="gmail-dot" style="background:#ffbd2e"></span>
+                            <span class="gmail-dot" style="background:#28c840"></span>
+                        </div>
+                        <span class="text-xs font-semibold" style="color:#5f6368">Gmail</span>
+                    </div>
+                    <div class="px-6 pt-5 pb-3 space-y-2.5">
+                        <div class="h-2.5 rounded-full" style="background:#e8eaed;width:65%"></div>
+                        <div class="h-2.5 rounded-full" style="background:#e8eaed;width:90%"></div>
+                        <div class="h-2.5 rounded-full" style="background:#e8eaed;width:45%"></div>
+                        <div class="mt-3 mb-1 text-xs" style="color:#9aa0a6">--</div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <iframe id="sig-iframe" style="width:100%;border:none;min-height:80px;background:#fff" title="Email Signature Preview"></iframe>
+                    </div>
+                </div>
+
+                <!-- How to use -->
+                <div class="rounded-xl p-5 text-sm" style="background:var(--paper);border:1px solid rgba(31,41,51,0.06)">
+                    <h3 class="font-bold mb-2" style="color:var(--ink)" x-text="dir==='rtl'?'איך להשתמש?':'How to use?'"></h3>
+                    <template x-if="dir==='rtl'">
+                        <ol class="space-y-1 list-decimal list-inside" style="color:var(--muted)">
+                            <li>מלאו את הפרטים בטופס</li>
+                            <li>בחרו תבנית וצבע</li>
+                            <li>לחצו <strong style="color:var(--ink)">העתקת חתימה</strong></li>
+                            <li>ב-Gmail: הגדרות &rarr; כל ההגדרות &rarr; חתימה &rarr; הדביקו (Ctrl+V)</li>
+                            <li>ב-Outlook: הגדרות &rarr; דואר &rarr; כתיבה והשבה &rarr; חתימה &rarr; הדביקו</li>
+                        </ol>
+                    </template>
+                    <template x-if="dir==='ltr'">
+                        <ol class="space-y-1 list-decimal list-inside" style="color:var(--muted)">
+                            <li>Fill in your details in the form</li>
+                            <li>Choose a template and brand color</li>
+                            <li>Click <strong style="color:var(--ink)">Copy Signature</strong></li>
+                            <li>Gmail: Settings &rarr; See all settings &rarr; Signature &rarr; Paste (Ctrl+V)</li>
+                            <li>Outlook: Settings &rarr; Mail &rarr; Compose &rarr; Signature &rarr; Paste</li>
+                        </ol>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-8 text-xs" style="color:var(--muted);border-top:1px solid var(--line)">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <span>&copy; 2024 קורות חיים בקליק. כל הזכויות שמורות.</span>
+            <div class="flex gap-4">
+                <a href="index.html" class="hover:text-[#9a3412] transition-colors">דף הבית</a>
+                <a href="builder.html" class="hover:text-[#9a3412] transition-colors">בניית קורות חיים</a>
+            </div>
+        </div>
+    </footer>
+
+<script src="src/signature-app.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+</html>

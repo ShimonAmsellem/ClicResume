@@ -83,7 +83,7 @@ export function renderContactList(personal, style = 'sidebar') {
 
 /** Render a list of experience-like items (experience, military, volunteering) */
 export function renderItemList(items, colorHex, options = {}) {
-    const { showTimeline = false, compact = false } = options;
+    const { showTimeline = false, compact = false, dir = 'rtl' } = options;
     if (!items.length) return '';
 
     const fontSize = compact ? '11.5px' : '12px';
@@ -111,7 +111,7 @@ export function renderItemList(items, colorHex, options = {}) {
         const linkLine = item.link ? `<p class="text-[10.5px] text-slate-400 ltr">${esc(item.link)}</p>` : '';
 
         const timelineDot = showTimeline
-            ? `<span class="absolute -right-[26px] top-1 w-2.5 h-2.5 rounded-full ring-2 ring-white" style="background:${colorHex}"></span>`
+            ? `<span class="absolute ${dir === 'ltr' ? '-left-[26px]' : '-right-[26px]'} top-1 w-2.5 h-2.5 rounded-full ring-2 ring-white" style="background:${colorHex}"></span>`
             : '';
 
         return `<div class="relative">
@@ -134,7 +134,7 @@ export function renderSkillChips(skills, colorKey, style = 'colored') {
         if (style === 'sidebar') {
             return `<span class="bg-white/10 ring-1 ring-white/15 text-[11px] px-2 py-0.5 rounded-md">${esc(s)}</span>`;
         } else if (style === 'light') {
-            return `<span class="text-[11px] font-medium px-2 py-0.5 rounded bg-white/70 text-slate-700 ring-1 ring-black/5">${esc(s)}</span>`;
+            return `<span class="text-[11px] font-medium px-2 py-0.5 rounded ${c.chipBg} ${c.chipText} ring-1 ring-black/5">${esc(s)}</span>`;
         } else {
             return `<span class="text-[11px] font-medium px-2 py-0.5 rounded ${c.chipBg} ${c.chipText}">${esc(s)}</span>`;
         }
@@ -183,11 +183,13 @@ export function sectionHeading(title, colorKey, style = 'line') {
     return `<h3 class="text-sm font-bold mb-3 ${c.text}">${esc(title)}</h3>`;
 }
 
-/** Render the watermark (always shown) */
-export function renderWatermark() {
+/** Render the watermark */
+export function renderWatermark(show, lang = 'he') {
+    if (show === false) return '';
+    const text = lang === 'en' ? 'Built with ClicResume' : 'נוצר עם קורות חיים בקליק';
     return `<div class="brand-watermark">
         <img src="assets/logo-mark.svg" alt="" class="brand-watermark__mark">
-        <span>נוצר עם קורות חיים בקליק</span>
+        <span>${text}</span>
         <span style="margin:0 3px;opacity:.5">|</span>
         <span style="direction:ltr">clicresume.com</span>
     </div>`;
@@ -230,3 +232,20 @@ export const CV_SECTION_LABELS = {
     skills: 'מיומנויות',
     languages: 'שפות'
 };
+
+export const CV_SECTION_LABELS_EN = {
+    about: 'Professional Summary',
+    experience: 'Work Experience',
+    education: 'Education',
+    military: 'Military / National Service',
+    volunteering: 'Volunteering',
+    projects: 'Projects',
+    certifications: 'Certifications & Licenses',
+    skills: 'Skills',
+    languages: 'Languages'
+};
+
+/** Get section labels based on language */
+export function getSectionLabels(lang) {
+    return lang === 'en' ? CV_SECTION_LABELS_EN : CV_SECTION_LABELS;
+}
